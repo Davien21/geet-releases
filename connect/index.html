@@ -40,7 +40,7 @@
   const [id = "", password = ""] = decodeURIComponent(location.hash.slice(1)).split("/");
   const cleanId = id.replace(/[^A-Za-z0-9]/g, "");
   if (cleanId) {
-    const groups = cleanId.length % 4 === 0 ? cleanId.match(/.{1,4}/g) : cleanId.match(/.{1,3}/g);
+    const groups = cleanId.match(/.{1,4}/g);
     document.getElementById("id").textContent = groups.join(" ");
     const target = "geet://connect/" + cleanId + (password ? "?password=" + encodeURIComponent(password) : "");
     document.getElementById("open").href = target;
