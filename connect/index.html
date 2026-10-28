@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Open in Geet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f6f6f4; --card: #ffffff; --text: #161616; --muted: #6b6b6b; --accent: #0E9488; --line: #e6e6e3; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141414; --card: #1e1e1e; --text: #f2f2f2; --muted: #9a9a9a; --line: #2c2c2c; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px;
+         background: var(--bg); color: var(--text); font-family: Figtree, -apple-system, system-ui, sans-serif; }
+  main { width: 100%; max-width: 380px; background: var(--card); border: 1px solid var(--line);
+         border-radius: 20px; padding: 32px 28px; text-align: center; }
+  h1 { font-size: 22px; font-weight: 600; margin: 0 0 6px; }
+  p { color: var(--muted); margin: 0; line-height: 1.45; }
+  .id { font-size: 30px; font-weight: 600; letter-spacing: 0.02em; margin: 22px 0 24px; font-variant-numeric: tabular-nums; }
+  a.button { display: block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600;
+             padding: 13px 16px; border-radius: 12px; }
+  small { display: block; margin-top: 18px; color: var(--muted); font-size: 13px; }
+  small a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Connect with Geet</h1>
+  <p id="lead">Opening Geet on this Mac…</p>
+  <div class="id" id="id">—</div>
+  <a class="button" id="open" href="#">Open in Geet</a>
+  <small>Don’t have Geet? <a href="https://github.com/Davien21/geet-releases/releases/latest">Download it</a></small>
+</main>
+<script>
+  const [id = "", password = ""] = decodeURIComponent(location.hash.slice(1)).split("/");
+  const cleanId = id.replace(/[^A-Za-z0-9]/g, "");
+  if (cleanId) {
+    const groups = cleanId.length % 4 === 0 ? cleanId.match(/.{1,4}/g) : cleanId.match(/.{1,3}/g);
+    document.getElementById("id").textContent = groups.join(" ");
+    const target = "geet://connect/" + cleanId + (password ? "?password=" + encodeURIComponent(password) : "");
+    document.getElementById("open").href = target;
+    location.href = target;
+  } else {
+    document.getElementById("lead").textContent = "This link is missing the computer’s ID.";
+    document.getElementById("open").style.display = "none";
+  }
+</script>
+</body>
+</html>
